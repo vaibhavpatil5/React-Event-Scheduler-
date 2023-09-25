@@ -17,31 +17,17 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-export default function EventCalendar({ allEvents, initialEvent }) {
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [newEvent, setNewEvent] = useState(initialEvent);
-  const [isEditMode, setIsEditMode] = useState(false);
+export default function EventCalendar({ allEvents }) {
+  const [selectedDay, setSelectedDay] = useState();
+  const [selectedEvent, setSelectedEvent] = useState();
 
-  const handleDayClick = (date) => {
-    setSelectedDay(date);
-    setSelectedEvent(null);
-    setIsEditMode(false);
-    setNewEvent(initialEvent);
+  const handleDayClick = () => {
+    setSelectedDay();
   };
 
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
-    setNewEvent(event);
-    setIsEditMode(true);
   };
-
-  const filteredEvents = allEvents.filter(
-    (event) =>
-      event.start.getDate() === selectedDay?.getDate() &&
-      event.start.getMonth() === selectedDay?.getMonth() &&
-      event.start.getFullYear() === selectedDay?.getFullYear()
-  );
 
   return (
     <div>
@@ -71,6 +57,7 @@ export default function EventCalendar({ allEvents, initialEvent }) {
           <h3>Selected Event</h3>
           <hr />
           <p className="mt-5">
+        
             <strong>Title:</strong>
             <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">
               {selectedEvent.title}
